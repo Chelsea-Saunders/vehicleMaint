@@ -1,0 +1,18 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "My API",
+    "description": "API Documnetation",
+    "version": "1.0.0"
+  },
+  "host": "localhost:3030",
+  "basePath": "/",
+  "schemes": [
+    "http"
+  ],
+  "paths": {},
+  "schemas": [
+    "http",
+    "https"
+  ]
+}
