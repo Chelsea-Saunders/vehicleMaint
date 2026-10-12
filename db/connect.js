@@ -1,5 +1,8 @@
 const dotenv = require('dotenv');
 dotenv.config();
+
+console.log('URI loaded?', !!process.env.MONGODB_URI);
+
 const { MongoClient } = require('mongodb');
 
 let _db;
@@ -10,8 +13,9 @@ const initDb = (callback) => {
         return callback(null, _db);
     }
 
-    MongoClient.connect(process.env.MONGODB_URI).then((client) => {
-        _db = client;
+    MongoClient.connect(process.env.MONGODB_URI)
+        .then((client) => {
+        _db = client.db('vehicleMaintenance');
         callback(null, _db);
     })
     .catch((err) => {
@@ -20,7 +24,7 @@ const initDb = (callback) => {
 };
 
 const getDb = () => {
-    if (!db) {
+    if (!_db) {
         throw Error('Db not initialized');
     }
     return _db;

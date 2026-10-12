@@ -1,8 +1,8 @@
 {
   "swagger": "2.0",
   "info": {
-    "title": "My API",
-    "description": "API Documnetation",
+    "title": "Vehicle Maintenance API",
+    "description": "API for vehicles and maintenance records",
     "version": "1.0.0"
   },
   "host": "localhost:3030",
@@ -10,7 +10,485 @@
   "schemes": [
     "http"
   ],
-  "paths": {},
+  "paths": {
+    "/": {
+      "get": {
+        "description": "",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/maintenanceRecords/": {
+      "get": {
+        "description": "",
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      },
+      "post": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "vin": {
+                  "example": "any"
+                },
+                "oil_change": {
+                  "example": "any"
+                },
+                "tire_pressure": {
+                  "example": "any"
+                },
+                "tire_rotation": {
+                  "example": "any"
+                },
+                "tranny_flush": {
+                  "example": "any"
+                },
+                "sparkplugs": {
+                  "example": "any"
+                },
+                "coolant": {
+                  "example": "any"
+                },
+                "wiper_fluid": {
+                  "example": "any"
+                },
+                "light_check": {
+                  "example": "any"
+                },
+                "air_filter": {
+                  "example": "any"
+                },
+                "fuel_filter": {
+                  "example": "any"
+                },
+                "brakes": {
+                  "example": "any"
+                },
+                "belts_hoses": {
+                  "example": "any"
+                },
+                "steering_suspension": {
+                  "example": "any"
+                },
+                "exhaust": {
+                  "example": "any"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Created"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/maintenanceRecords/{id}": {
+      "get": {
+        "description": "",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      },
+      "put": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "vin": {
+                  "example": "any"
+                },
+                "oil_change": {
+                  "example": "any"
+                },
+                "tire_pressure": {
+                  "example": "any"
+                },
+                "tire_rotation": {
+                  "example": "any"
+                },
+                "tranny_flush": {
+                  "example": "any"
+                },
+                "sparkplugs": {
+                  "example": "any"
+                },
+                "coolant": {
+                  "example": "any"
+                },
+                "wiper_fluid": {
+                  "example": "any"
+                },
+                "light_check": {
+                  "example": "any"
+                },
+                "air_filter": {
+                  "example": "any"
+                },
+                "fuel_filter": {
+                  "example": "any"
+                },
+                "brakes": {
+                  "example": "any"
+                },
+                "belts_hoses": {
+                  "example": "any"
+                },
+                "steering_suspension": {
+                  "example": "any"
+                },
+                "exhaust": {
+                  "example": "any"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "No Content"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      },
+      "delete": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "No Content"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/vehicles/": {
+      "get": {
+        "description": "",
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      },
+      "post": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "title": {
+                  "example": "any"
+                },
+                "brand": {
+                  "example": "any"
+                },
+                "vin": {
+                  "example": "any"
+                },
+                "year": {
+                  "example": "any"
+                },
+                "color": {
+                  "example": "any"
+                },
+                "mileage": {
+                  "example": "any"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Created"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/vehicles/{id}": {
+      "get": {
+        "description": "",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      },
+      "put": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "title": {
+                  "example": "any"
+                },
+                "brand": {
+                  "example": "any"
+                },
+                "vin": {
+                  "example": "any"
+                },
+                "year": {
+                  "example": "any"
+                },
+                "color": {
+                  "example": "any"
+                },
+                "mileage": {
+                  "example": "any"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "No Content"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      },
+      "delete": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "No Content"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "Vehicles": {
+      "type": "object",
+      "properties": {
+        "title": {
+          "type": "string",
+          "example": "Vin"
+        },
+        "brand": {
+          "type": "string",
+          "example": "Toyota"
+        },
+        "vin": {
+          "type": "string",
+          "example": "123456789asd"
+        },
+        "color": {
+          "type": "string",
+          "example": "Blue"
+        },
+        "year": {
+          "type": "number",
+          "example": 2020
+        },
+        "mileage": {
+          "type": "number",
+          "example": 56981
+        }
+      }
+    },
+    "MaintenanceRecord": {
+      "type": "object",
+      "properties": {
+        "vin": {
+          "type": "string",
+          "example": "123456789asd"
+        },
+        "oil_change": {
+          "type": "string",
+          "example": "2026-01-15"
+        },
+        "tire_pressure": {
+          "type": "number",
+          "example": 35
+        },
+        "tire_rotation": {
+          "type": "string",
+          "example": "2026-01-15"
+        },
+        "tranny_flush": {
+          "type": "string",
+          "example": "2026-01-15"
+        },
+        "sparkplugs": {
+          "type": "string",
+          "example": "2026-01-15"
+        },
+        "coolant": {
+          "type": "string",
+          "example": "2026-01-15"
+        },
+        "wiper_fluid": {
+          "type": "string",
+          "example": "full"
+        },
+        "light_check": {
+          "type": "string",
+          "example": "2026-01-15"
+        },
+        "air_filter": {
+          "type": "string",
+          "example": "2026-01-15"
+        },
+        "fuel_filter": {
+          "type": "string",
+          "example": "2026-01-15"
+        },
+        "brakes": {
+          "type": "string",
+          "example": "2026-01-15"
+        },
+        "belts_hoses": {
+          "type": "string",
+          "example": "2026-01-15"
+        },
+        "steering_suspension": {
+          "type": "string",
+          "example": "2026-01-15"
+        },
+        "exhaust": {
+          "type": "string",
+          "example": "2026-01-15"
+        }
+      }
+    }
+  },
   "schemas": [
     "http",
     "https"
