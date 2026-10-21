@@ -8,7 +8,8 @@
   "host": "vehiclemaint.onrender.com",
   "basePath": "/",
   "schemes": [
-    "http"
+    "http",
+    "https"
   ],
   "paths": {
     "/": {
@@ -488,9 +489,5 @@
         }
       }
     }
-  },
-  "schemas": [
-    "http",
-    "https"
-  ]
+  }
 }
