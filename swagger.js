@@ -5,8 +5,8 @@ const doc = {
         title: 'Vehicle Maintenance API',
         description: 'API for vehicles and maintenance records'
     },
-    host: 'https://vehiclemaint.onrender.com',
-    schemas: ['http', 'https'],
+    host: 'vehiclemaint.onrender.com',
+    schemes: ['http', 'https'],
     definitions: { 
         Vehicles: {
             title: 'Vin',
