@@ -1,15 +1,18 @@
 const express = require('express');
 const router = express.Router();
+const  { ensureAuth, ensureGuest } = require('../middleware/auth');
+require ('../middleware/auth');
 
-const swaggerUi = require('swagger-ui-express');
-const swaggerDocument = require('../swagger-output.json');
-
-router.get('/', (req, res) => {
-    res.send('Vehicle maintenance API is running.');
+router.get('/', ensureGuest, (req, res) => {
+res.send('Login or landing page here');
 });
 
-router.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
-router.use('/maintenanceRecords', require('./maintenanceRecords'));
-router.use('/vehicles', require('./vehicles'));
+router.get('/login', ensureGuest, (req, res) => {
+    res.send('Login page here');
+});
+
+router.get('/dashboard', ensureAuth, (req, res) => {
+    res.send(`Welcome ${req.user.displayName}`);
+});
 
 module.exports = router;
