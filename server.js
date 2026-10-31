@@ -6,6 +6,7 @@ const MongoStore = require('connect-mongo').default;
 const passport = require('passport');
 const swaggerui = require('swagger-ui-express');
 const swaggerDocument = require('./swagger-output.json');
+const cors = require('cors');
 
 const mongodb = require('./db/connect');
 
@@ -14,7 +15,11 @@ require('./config/passport')(passport);
 const app = express();
 const PORT = process.env.PORT || 3030;
 
-// console.log('SESSION_SECRET:', process.env.SESSION_SECRET);
+app.use(cors({
+    origin: '*',
+    methods: ['GET', 'POST', 'PUT', 'DELETE'],
+    allowedHeaders: ['Content-Type', 'Authorization']
+}));
 
 app.use(
     session({
