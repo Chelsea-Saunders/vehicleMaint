@@ -1,6 +1,6 @@
 // const mongodb = require('../db/connect');
 const { ObjectId } = require('mongodb');
-const vehicleModel = require('../models/vehicle');
+const vehicleModel = require('../models/vehicle.js');
 
 // const getCollection = () => {
 //     return mongodb.getDb().collection('vehicles');
