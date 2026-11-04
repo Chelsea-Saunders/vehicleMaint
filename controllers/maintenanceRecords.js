@@ -10,7 +10,6 @@ const recordModel = require('../models/maintenanceRecord');
 const getAllRecords = async (req, res) => {
     try {
         const result = await recordModel.findAllRecords();
-        res.setHeader('Content-Type', 'application/json');
         res.status(200).json(result);
     } catch (err) {
         res.status(500).json({ message: err.message });
@@ -21,7 +20,7 @@ const getAllRecords = async (req, res) => {
 const getOneRecord = async (req, res) => {
     try {
         if (!ObjectId.isValid(req.params.id)) {
-            return res.status(400).json('Must use valid vehicle vin to find a vehicle');
+            return res.status(400).json({ message: 'Invalid vehicle id.' });
         }
 
         const recordId = new ObjectId(req.params.id);
@@ -30,7 +29,6 @@ const getOneRecord = async (req, res) => {
         if (!result) {
             return res.status(404).json('Record not found');
         }
-        res.setHeader('Content-Type', 'application/json');
         res.status(200).json(result);
     } catch (err) {
         res.status(500).json({ message: err.message });
@@ -62,7 +60,7 @@ const createRecord = async (req, res) => {
         if (response.insertedId) {
             res.status(201).json(response);
         } else { 
-            res.status(500).json('Some error occured while creating this record.');
+            res.status(404).json('Some error occured while creating this record.');
         }
     } catch (err) {
         res.status(500).json({ message: err.message });
@@ -73,7 +71,7 @@ const createRecord = async (req, res) => {
 const updateRecord = async (req, res) => {
     try {
         if (!ObjectId.isValid(req.params.id)) {
-            return res.status(400).json('Must have a valid record id.');
+            return res.status(400).json({ message: 'Invalid record id' });
         }
         const record = {
             vin: req.body.vin,
@@ -94,11 +92,13 @@ const updateRecord = async (req, res) => {
         };
 
         const response = await recordModel.replaceRecord(req.params.id, record);
-        if (response.modifiedCount > 0) {
-            res.status(204).send();
-        } else {
-            res.status(500).json('Some error occured while updating the record.');
+        if (response.matchedCount === 0) {
+            return res.status(404).json({ message: 'Record not found.' });
+        } 
+        if (response.modifiedCount === 0) {
+            return res.status(200).json({ message: 'Record found, but no changes were made' });
         }
+        return res.status(204).send();
     } catch (err) {
         res.status(500).json({ message: err.message });
     }
@@ -108,13 +108,13 @@ const updateRecord = async (req, res) => {
 const deleteRecord = async (req, res) => {
     try {
         if (!ObjectId.isValid(req.params.id)) {
-            return res.status(400).json('Must use a valid record id to delete a record.');
+            return res.status(400).json({ message: 'Invalid record id' });
         }
         const response = await recordModel.removeRecord(req.params.id);
         if (response.deletedCount > 0) {
             res.status(204).send();
         } else {
-            res.status(500).json('Some error occured while deleting this record.');
+            res.status(404).json('Some error occured while deleting this record.');
         }
     } catch (err) {
         res.status(500).json({ message: err.message});

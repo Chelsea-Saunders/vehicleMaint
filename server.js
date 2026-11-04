@@ -47,11 +47,16 @@ app.use('/auth', require('./routes/auth'));
 
 mongodb.initDb(async (err) => {
     if(err) {
-        console.log(err);
-    } else {
+        console.error('MongoDB connection error:', err);
+        process.exit(1);
+    } 
+    try {
         await connectMongoose();
         app.listen(PORT, () => {
             console.log(`Connected to DB and listening on port ${PORT}.`);
         });
+    } catch (err) {
+        console.error('Mongoose connection error:', err);
+        process.exit(1);
     }
 });

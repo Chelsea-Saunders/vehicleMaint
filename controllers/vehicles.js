@@ -10,7 +10,6 @@ const vehicleModel = require('../models/vehicle.js');
 const getAllVehicles = async (req, res) => {
     try {
         const result = await vehicleModel.findAllVehicles();
-        res.setHeader('Content-Type', 'application/json');
         res.status(200).json(result);
     } catch (err) {
         res.status(500).json({ message: err.message });
@@ -21,7 +20,7 @@ const getAllVehicles = async (req, res) => {
 const getOneVehicle = async (req, res) => {
     try {
         if (!ObjectId.isValid(req.params.id)) {
-            return res.status(400).json('Must use valid vehicle vin to find a vehicle');
+            return res.status(400).json({ message: 'Invalid vehicle id' });
         }
 
         const vehicleId = new ObjectId(req.params.id);
@@ -30,7 +29,6 @@ const getOneVehicle = async (req, res) => {
         if (!result) {
             return res.status(404).json('Vehicle not found');
         }
-        res.setHeader('Content-Type', 'application/json');
         res.status(200).json(result);
     } catch (err) {
         res.status(500).json({ message: err.message });
@@ -54,7 +52,7 @@ const createVehicle = async (req, res) => {
         if (response.insertedId) {
             res.status(201).json(response);
         } else { 
-            res.status(500).json('Some error occured while creating this vehicle.');
+            res.status(404).json('Some error occured while creating this vehicle.');
         }
     } catch (err) {
         console.error(err);
@@ -66,7 +64,7 @@ const createVehicle = async (req, res) => {
 const updateVehicle = async (req, res) => {
     try {
         if (!ObjectId.isValid(req.params.id)) {
-            return res.status(400).json('Must have a valid vin to update a vehicle');
+            return res.status(400).json({ message: 'Invalid vehicle id' });
         }
         const vehicle = {
             title: req.body.title,
@@ -78,11 +76,14 @@ const updateVehicle = async (req, res) => {
         };
 
         const response = await vehicleModel.replaceVehicle(req.params.id, vehicle);
-        if (response.modifiedCount > 0) {
-            res.status(204).send();
-        } else {
-            res.status(500).json('Some error occurec while updating the vehicle.');
+        if (response.matchedCount === 0) {
+            return res.status(404).json({ message: 'Vehicle not found.' });
+        } 
+        if (response.modifiedCount === 0) {
+            return res.status(200).json({ message: 'Vehicle found, but no changes were made.' });
         }
+
+        return res.status(204).send();
     } catch (err) {
         res.status(500).json({ message: err.message });
     }
@@ -92,13 +93,13 @@ const updateVehicle = async (req, res) => {
 const deleteVehicle = async (req, res) => {
     try {
         if (!ObjectId.isValid(req.params.id)) {
-            return res.status(400).json('Must use a valid vehicle id to delete a vehicle.');
+            return res.status(400).json({ message: 'Invalid vehicle id.' });
         }
         const response = await vehicleModel.removeVehicle(req.params.id);
         if (response.deletedCount > 0) {
             res.status(204).send();
         } else {
-            res.status(500).json('Some error occured while deleting this vehicle.');
+            res.status(404).json('Some error occured while deleting this vehicle.');
         }
     } catch (err) {
         res.status(500).json({ message: err.message});
